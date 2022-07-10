@@ -1,0 +1,92 @@
+#page_intro {
+  font-size: 17px;
+}
+#main_area {
+  background: #fafafa;
+  padding: 15px;
+  font-size:16px;
+  border: 1px solid #eee;
+  text-align: center;
+}
+#survey_nav {
+ margin: 20px 0;
+}
+#prevBtn {
+  font-size: 18px;
+  padding: 8px;
+  font-weight: bold;
+  width: 50%;
+  margin: 0 5px 0 -5px;
+  background: #fcfcfc;
+}
+#nextBtn {
+  font-size: 18px;
+  padding: 8px;
+  font-weight: bold;
+  width: 50%;
+  margin: 0 -5px 0 5px;
+}
+label {
+  font-size: 16px;
+  line-height: 20px;
+}
+#page_disclaimer {
+  font-size: 0.9em;
+  text-align: left;
+}
+#page_disclaimer label {
+  font-size: 1em;
+}
+#page_num_out {
+  text-align: center;
+}
+#page_choose_next_participant {
+  text-align: left;
+}
+.page.page_demographic_q {
+  min-height: 160px;
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.page.page_likert_q {
+  min-height: 140px;
+}
+
+.page.page_likert_q .radio-inline {
+  padding-left: 0;
+  width: 13%;
+}
+
+.page.page_likert_q .radio-inline+.radio-inline {
+  margin-left: 0;
+}
+
+.page.page_likert_q .radio-inline input[type=radio] {
+  margin-left: 0;
+}
+
+.page.page_likert_q .radio-inline span {
+  margin-left: 20px;
+}
+
+.page.page_results {
+  text-align: left;
+  font-size: 16px;
+}
+
+#scale_instructions .scale_label {
+  display: inline-block;
+  width: 13%;
+}
+.section-subtitle {
+  margin-top: 20px;
+}
+
+#password_section .form-group {
+  display: inline-block;
+}
+
+#download_pw_submit {
+  margin: 0 0 1px 20px;
+}
