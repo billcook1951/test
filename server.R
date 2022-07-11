@@ -134,7 +134,7 @@ function(input, output, session) {
       ~person_id,     ~person,           ~name,              ~age,              ~gender,
       ID_MOTHER,      "mother",          input$name_you,     input$age_you,     "Female",
       ID_FATHER,      "father",          input$name_other,   input$age_other,   "Male",
-      ID_CHILD_OLD,   "older sibling",   input$name_child_1, input$age_child_1, input$gender_child_1,
+ #     ID_CHILD_OLD,   "older sibling",   input$name_child_1, input$age_child_1, input$gender_child_1,
       ID_CHILD_YOUNG, "younger sibling", input$name_child_2, input$age_child_2, input$gender_child_2
     )
   })
@@ -287,16 +287,16 @@ function(input, output, session) {
       relationship = c(
         build_relationship(ID_MOTHER, ID_FATHER),
         build_relationship(ID_FATHER, ID_MOTHER),
-        build_relationship(ID_MOTHER, ID_CHILD_OLD),
-        build_relationship(ID_CHILD_OLD, ID_MOTHER),
+#        build_relationship(ID_MOTHER, ID_CHILD_OLD),
+#        build_relationship(ID_CHILD_OLD, ID_MOTHER),
         build_relationship(ID_MOTHER, ID_CHILD_YOUNG),
         build_relationship(ID_CHILD_YOUNG, ID_MOTHER),
-        build_relationship(ID_FATHER, ID_CHILD_OLD),
-        build_relationship(ID_CHILD_OLD, ID_FATHER),
+#        build_relationship(ID_FATHER, ID_CHILD_OLD),
+#        build_relationship(ID_CHILD_OLD, ID_FATHER),
         build_relationship(ID_FATHER, ID_CHILD_YOUNG),
-        build_relationship(ID_CHILD_YOUNG, ID_FATHER),
-        build_relationship(ID_CHILD_OLD, ID_CHILD_YOUNG),
-        build_relationship(ID_CHILD_YOUNG, ID_CHILD_OLD)
+        build_relationship(ID_CHILD_YOUNG, ID_FATHER)
+#        build_relationship(ID_CHILD_OLD, ID_CHILD_YOUNG),
+#        build_relationship(ID_CHILD_YOUNG, ID_CHILD_OLD)
       )
     )
 
@@ -304,8 +304,8 @@ function(input, output, session) {
       left_join(out_text, relationship_z_scores_text(), by = "relationship") %>%
       pull(z_score_text)
 
-    out <- tagList()
-    for (i in c(1, 3, 5, 7, 9, 11)) {
+    out <- tagList()  # drop which ones? try dropping 7, 9, 11
+    for (i in c(1, 3, 5)) {
       out[[i]] <- div(
         HTML(out_text[i]), br(),
         HTML(out_text[i + 1]), br(), br()
@@ -330,7 +330,7 @@ function(input, output, session) {
     fam_tbl$act <- lapply(fam_tbl$person_id, function(p) calc_act(p, rel_tbl)) %>% unlist()
     fam_tbl$part <- lapply(fam_tbl$person_id, function(p) calc_part(p, rel_tbl)) %>% unlist()
 
-    fam <- sum(rel_tbl$x) / 12
+    fam <- sum(rel_tbl$x) / n*(n-1)
 
     # relationship effects
     rel_tbl <- rel_tbl %>%
@@ -470,13 +470,13 @@ function(input, output, session) {
       lapply(ID_ALL_MEMBERS, function(person) {
         tagList(
           html_srm_info[[person]](),
-          br(), br(), br(),br(),br(),
+          br(), br(), br(),br(),br()
         )
       }),
       lapply(ID_ALL_MEMBERS, function(person) {
         tagList(
           html_narrative_info[[person]](),
-          br(), br(), br(),br(),br(),br(),br(),br(),br(),br(),br(),
+          br(), br(), br(),br(),br(),br(),br(),br(),br(),br(),br()
         )
       })
     ))
@@ -521,13 +521,13 @@ function(input, output, session) {
   
    if (DEV_MODE) {
     # For quicker testing, pre-accept the Terms and add family members names
-   # updateCheckboxInput(session, "legal1", value = FALSE)
-  #  updateCheckboxInput(session, "legal2", value = TRUE)
-  #  updateCheckboxInput(session, "legal3", value = TRUE)
-  #  updateTextInput(session, "name_you", value = "mom")
-  #  updateTextInput(session, "name_other", value = "dad")
-  #  updateTextInput(session, "name_child_1", value = "old")
-  #  updateTextInput(session, "name_child_2", value = "young")
+    updateCheckboxInput(session, "legal1", value = TRUE)
+    updateCheckboxInput(session, "legal2", value = TRUE)
+    updateCheckboxInput(session, "legal3", value = TRUE)
+    updateTextInput(session, "name_you", value = "mom")
+    updateTextInput(session, "name_other", value = "dad")
+ #   updateTextInput(session, "name_child_1", value = "old")
+    updateTextInput(session, "name_child_2", value = "young")
     
     # Show results in realtime
     output$dev_table_fam_members_tbl <- DT::renderDT({
